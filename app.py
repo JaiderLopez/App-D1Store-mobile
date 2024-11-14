@@ -20,10 +20,11 @@ class AppD1(ft.Container):
                                  font_family= 'Poppins')
       #           products list
       self.products_list = [
+         ProductCard(self.page, "Pollo Marinado", "Perniles de pollo en bandeja", "assets/product01.png", 12600, 4.6, 399),
+         ProductCard(self.page, "Aceite Don Olio", "Frasco aceite 2000ml", "assets/product02.png", 11400, 4.0, 399),
+         ProductCard(self.page, "Brilla King", "Limpido de 2000 ml", "assets/product03.png", 4300, 4.1, 399),
          ProductCard(self.page, "Leche 200ml", "Leche Entera de 200 ml", "assets/product04.png", 2800, 4.2, 399),
-         ProductCard(self.page, "Leche 200ml", "Leche Entera de 200 ml", "assets/product04.png", 2800, 4.2, 399),
-         ProductCard(self.page, "Leche 200ml", "Leche Entera de 200 ml", "assets/product04.png", 2800, 4.2, 399),
-         ProductCard(self.page, "Leche 200ml", "Leche Entera de 200 ml", "assets/product04.png", 2800, 4.2, 399),
+         ProductCard(self.page, "Magic Friend Cachorros", "Purina para perros 1Kg", "assets/product05.png", 6900, 4.7, 399),
       ]
       self.grid_view_all = ft.GridView(runs_count=3, child_aspect_ratio=0.5,
                                        controls= self.products_list,
@@ -69,19 +70,19 @@ class AppD1(ft.Container):
                                                                       content= self.grid_view_all),
                                                                ft.Tab(text= 'Despensa',
                                                                       content= ft.GridView(runs_count=3, child_aspect_ratio=0.8,
-                                                                      controls=[ft.Text("Despensa")])),
+                                                                      controls=[self.products_list[1]])),
                                                                ft.Tab(text= 'Congelados',
                                                                       content= ft.GridView(runs_count=3, child_aspect_ratio=0.8,
-                                                                      controls=[ft.Text("Congelados")])),
+                                                                      controls=[self.products_list[0]])),
                                                                ft.Tab(text= 'Aseo',
                                                                       content= ft.GridView(runs_count=3, child_aspect_ratio=0.8,
-                                                                      controls=[ft.Text("Aseo")])),
+                                                                      controls=[self.products_list[2]])),
                                                                ft.Tab(text= 'Lacteos',
                                                                       content= ft.GridView(runs_count=3, child_aspect_ratio=0.8,
-                                                                      controls=[ft.Text("Lacteos")])),
+                                                                      controls=[self.products_list[3]])),
                                                                ft.Tab(text= 'Mascotas',
                                                                       content= ft.GridView(runs_count=3, child_aspect_ratio=0.8,
-                                                                      controls=[ft.Text("Mascotas")])),
+                                                                      controls=[self.products_list[4]])),
                                                             ]
                                                                         )
                                                    )
@@ -164,8 +165,13 @@ class AppD1(ft.Container):
 
    # ---------------------------------------- FUNCIONES ----------------------------------------
    def filter_products(self, e):
-
-      pass
+      search = e.control.value.lower()
+      filter_products = [
+         products for products in self.products_list if search in products.title.lower()
+      ]
+      
+      self.grid_view_all.controls = filter_products
+      self.grid_view_all.update()
 
    def change_nav(self, e):
       data = e.control.data

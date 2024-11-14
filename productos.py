@@ -6,22 +6,66 @@ class ProductView(ft.View):
       self.product = product
       
       self.controls = [
-         ft.Container(expand=True, alignment= ft.alignment.center, bgcolor= "#0b0e13",
-                      margin= 10,
-                      content= ft.Column(expand= True, horizontal_alignment= ft.CrossAxisAlignment.CENTER,
-                                         controls= [
-                                            ft.Stack(expand= 8, 
-                                                     controls=[
-                                                        ft.Container(alignment= ft.alignment.center, border_radius= 20,
-                                                                  content= ft.Image(src= self.product.img_src, width= 300,
-                                                                                    height= 400, fit= 'cover')),
-                                                         ft.Container(content=ft.Row([ft.Icon(name= ft.icons.KEYBOARD_ARROW_LEFT),
-                                                                 ft.Text("Volver", color= 'white')]), on_click= self.close_view)
-                                                     ]),
-                                          
-                                         ]
-                              )
-         )
+         ft.Container(expand= True, alignment= ft.alignment.center, bgcolor= "#0b0e13",
+                  margin= 10, padding= 10,
+                  content= ft.Column(expand= True, horizontal_alignment= ft.CrossAxisAlignment.CENTER,
+                           alignment= ft.MainAxisAlignment.CENTER,
+                           # scroll= ft.ScrollMode.AUTO,
+                           controls= [
+                              ft.Stack(expand= 9, 
+                                 controls=[
+                                    ## img product
+                                    ft.Container(alignment= ft.alignment.center, border_radius= 0, #bgcolor= "red",
+                                             content= ft.Image(src= self.product.img_src, width= 300, 
+                                                               height= 400, fit= 'cover', border_radius= 15,)
+                                    ),
+                                    ## back and close view option
+                                    ft.Container(content=ft.Row([ft.Icon(name= ft.icons.KEYBOARD_ARROW_LEFT,),
+                                             ft.Text("Volver", color= 'white',)]), on_click= self.close_view,
+                                             offset= ft.transform.Offset(0, 0),
+                                    ),
+                                    ## descripcion product
+                                    ft.Container(expand= True, alignment= ft.alignment.center_left, bgcolor= ft.colors.with_opacity(0.4, 'black'),
+                                                padding= 20, margin= ft.margin.only(top= 200), shadow= ft.BoxShadow(
+                                                                                                         spread_radius= 15,
+                                                                                                         blur_radius= 20,
+                                                                                                         color= ft.colors.with_opacity(0.3, 'black'),
+                                                                                                         # offset= ft.transform.Offset(0, 0)
+                                                                                                      ), border_radius= 20,
+                                                content= ft.Column(spacing= 10, controls= [
+                                                                                 ft.Text(value= self.product.title, size= 30, weight= 'bold', color= 'white'),
+                                                                                 ft.Text(value= self.product.description, size= 15, weight= 'w400', color= 'white'),
+                                                                                 ft.Row(spacing= 5, 
+                                                                                          controls=[
+                                                                                             ft.Icon(name= ft.cupertino_icons.MONEY_DOLLAR, color= ft.colors.YELLOW_100),
+                                                                                             ft.Text(value= str(self.product.price), weight= 'bold', color= ft.colors.YELLOW_400)
+                                                                                             ]
+                                                                                 ),
+                                                                                 ft.Text(value= f"Stock: {self.product.stock}", size= 20, weight= 'bold', color= 'white'),
+                                                                              ]
+                                                         )
+                                    ),
+                                 ]
+                              ),
+                              ft.Container(height= 25, alignment= ft.alignment.center_left,
+                                           content= ft.Text("Opciones:", color= 'white', size= 18)),
+                              ft.Row(expand= 2, spacing= 5, alignment= ft.MainAxisAlignment.SPACE_AROUND,
+                                     controls= [
+                                        ft.ElevatedButton("Carrito", color= 'white', bgcolor= "#a10316", icon= ft.cupertino_icons.CART_BADGE_PLUS,
+                                                      style= ft.ButtonStyle(overlay_color= {"hovered": '#db0616'},
+                                                                     elevation= 200, shape= ft.RoundedRectangleBorder(radius= 20),
+                                                                     side= ft.BorderSide(1, "#ffffff"))
+                                          ),
+                                        ft.ElevatedButton("Favoritos", color= 'white', bgcolor= "#a10316", icon= ft.icons.FAVORITE,
+                                                      style= ft.ButtonStyle(overlay_color= {"hovered": '#db0616'},
+                                                                     elevation= 200, shape= ft.RoundedRectangleBorder(radius= 20),
+                                                                     side= ft.BorderSide(1, "#ffffff"))
+                                          )
+                                     ]),
+                           ]
+                        )
+         ), 
+
       ]
 
    def close_view(self, e):
